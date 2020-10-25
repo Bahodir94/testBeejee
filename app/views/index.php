@@ -37,7 +37,7 @@
 					<td><?=$row['username'];?></td>
 					<td><?=$row['email'];?></td>
 					<td><?=$row['task_description'];?></td>
-					<td><?=($row['status'] == 0) ?  "Не выполнено" : "Выполнено<br><small><i>(отредактировано администратором)</i></small>"; ?></td>
+					<td><?=($row['status'] == 0) ?  "Не выполнено" : "Выполнено";?><?=($row['edited'] ==1) ? "<br><small><i>(отредактировано администратором)</i></small>":""?></td>
 					<?php if($_SESSION['user']=='admin') : ?>
 						<td>
 						<?php if ($row['status']==0) :?>

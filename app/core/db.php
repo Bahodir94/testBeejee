@@ -17,6 +17,7 @@ class db extends dbconnect
       $result = mysqli_query($this->conn, $sql);
       $row = mysqli_fetch_array($result);
       $total_rows = $row[0];
+      if ($_SESSION['user']=='admin') $admin = true;
       if ($sort==null) $sort = "DESC";
       if ($total_rows > $limit) 
       {
@@ -28,9 +29,20 @@ class db extends dbconnect
         $number_of_pages = 1;
       }
       if ($column==null)
-        $sql = "SELECT * FROM $table ORDER BY id DESC LIMIT $offset, $limit";
-      else 
-        $sql = "SELECT * FROM $table ORDER BY $column $sort LIMIT $offset, $limit";
+        if  ($admin) {
+          $sql = "SELECT * FROM $table ORDER BY id DESC LIMIT $offset, $limit";
+        }
+        else {
+          $sql = "SELECT * FROM $table WHERE status=1 ORDER BY id DESC LIMIT $offset, $limit";
+        }
+      else {
+        if ($admin){
+          $sql = "SELECT * FROM $table ORDER BY $column $sort LIMIT $offset, $limit";
+        }
+        else {
+          $sql = "SELECT * FROM $table WHERE status=1 ORDER BY $column $sort LIMIT $offset, $limit";
+        }
+      }
 
       $result = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
       $res = array('page' => $page, 'number_of_pages' => $number_of_pages, 'result' => $result);
@@ -68,10 +80,12 @@ class db extends dbconnect
       $username = $this->escape_string($data['username']);
       $email = $this->escape_string($data['email']);
       $task = $this->escape_string($data['task_description']);
+      $edited = $this->escape_string($data['edited']);
 
       $str = "username='".$username;
       $str.= "', email='".$email;
-      $str.= "', task_description='".$task."'";
+      $str.= "', task_description='".$task;
+      $str.= "', edited='".$edited."'";
       
       $sql='UPDATE '.$table.' SET '.$str." WHERE id=".$id;
       $result = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));

@@ -10,6 +10,7 @@
 		<div class="form-group col-md-5">
 			<label for="email">Email:</label>
 			<input type="email" name="email" class="form-control" placeholder="Введите e-mail" required="true" value="<?=$data['email']?>">
+			<input type="hidden" name="edited" value='1'>
 		</div>
 	</div>
 

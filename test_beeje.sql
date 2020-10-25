@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 24 2020 г., 13:17
+-- Время создания: Окт 25 2020 г., 13:27
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.5
 
@@ -29,23 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tasks` (
   `id` int NOT NULL,
-  `username` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `task_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `status` tinyint NOT NULL DEFAULT '0'
+  `username` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `email` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `task_description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` tinyint NOT NULL DEFAULT '0',
+  `edited` tinyint NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Дамп данных таблицы `tasks`
 --
 
-INSERT INTO `tasks` (`id`, `username`, `email`, `task_description`, `status`) VALUES
-(1, 'baxa94\'', 'behko@bk.ru', '\'TEST\'', 1),
-(2, 'u1188124', 'behko@bk.ru', 'adsdasdas', 1),
-(3, 'admin', 'weebcreator94@gmail.com', 'weebcreator94@gmail.com', 1),
-(4, 'u1188124_admin', 'weebcreator94@gmail.com', 'weebcreator94@gmail.com', 0),
-(5, 'admin', '12345@bk.ru', 'TEST', 0),
-(6, 'Test', 'admin@test.ru', 'TEST 6', 0);
+INSERT INTO `tasks` (`id`, `username`, `email`, `task_description`, `status`, `edited`) VALUES
+(1, 'baxa94\'', 'behko@bk.ru', '\'TEST\'', 1, 0),
+(2, 'u1188124', 'behko@bk.ru', 'adsdasdas', 1, 0),
+(3, 'admin', 'weebcreator94@gmail.com', 'weebcreator94@gmail.com', 1, 0),
+(4, 'u1188124_admin', 'weebcreator94@gmail.com', 'weebcreator94@gmail.com', 0, 0),
+(5, 'admin', '12345@bk.ru', 'TEST', 0, 0),
+(6, 'Test', 'admin@test.ru', 'TEST 6 edited', 1, 1);
 
 --
 -- Индексы сохранённых таблиц

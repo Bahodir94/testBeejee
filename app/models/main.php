@@ -1,7 +1,6 @@
 <?php
 class Main extends Model
 {
-
 	function __construct()
 	{
 		$this->view = new View();
@@ -24,7 +23,8 @@ class Main extends Model
 
 	public function update_data($data,$id)
 	{	$db = new db();
-		return $db->update("tasks", $data, $id);
+		if ($_SESSION['user'] == 'admin')
+			return $db->update("tasks", $data, $id);
 	}
 	
 	public function change_status($data)
