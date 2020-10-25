@@ -13,11 +13,16 @@ class db extends dbconnect
 
     public function select($table,$page=null,$offset=null,$limit=null, $sort=null,$column=null)
     {
-      $sql = "SELECT count(id) FROM $table";
+      if ($_SESSION['user']=='admin') $admin = true;
+      if ($admin){
+        $sql = "SELECT count(id) FROM $table";
+      }
+      else {
+        $sql = "SELECT count(id) FROM $table WHERE status=1";
+      }
       $result = mysqli_query($this->conn, $sql);
       $row = mysqli_fetch_array($result);
       $total_rows = $row[0];
-      if ($_SESSION['user']=='admin') $admin = true;
       if ($sort==null) $sort = "DESC";
       if ($total_rows > $limit) 
       {
