@@ -13,13 +13,7 @@ class db extends dbconnect
 
     public function select($table,$page=null,$offset=null,$limit=null, $sort=null,$column=null)
     {
-      if ($_SESSION['user']=='admin') $admin = true;
-      if ($admin){
-        $sql = "SELECT count(id) FROM $table";
-      }
-      else {
-        $sql = "SELECT count(id) FROM $table WHERE status=1";
-      }
+      $sql = "SELECT count(id) FROM $table";
       $result = mysqli_query($this->conn, $sql);
       $row = mysqli_fetch_array($result);
       $total_rows = $row[0];
@@ -33,20 +27,11 @@ class db extends dbconnect
         $page = 1;
         $number_of_pages = 1;
       }
-      if ($column==null)
-        if  ($admin) {
-          $sql = "SELECT * FROM $table ORDER BY id DESC LIMIT $offset, $limit";
-        }
-        else {
-          $sql = "SELECT * FROM $table WHERE status=1 ORDER BY id DESC LIMIT $offset, $limit";
-        }
+      if ($column==null){
+        $sql = "SELECT * FROM $table ORDER BY id DESC LIMIT $offset, $limit";
+      }
       else {
-        if ($admin){
           $sql = "SELECT * FROM $table ORDER BY $column $sort LIMIT $offset, $limit";
-        }
-        else {
-          $sql = "SELECT * FROM $table WHERE status=1 ORDER BY $column $sort LIMIT $offset, $limit";
-        }
       }
 
       $result = mysqli_query($this->conn, $sql) or die(mysqli_error($this->conn));
